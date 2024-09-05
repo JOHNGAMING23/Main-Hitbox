@@ -1,0 +1,165 @@
+local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Orion/main/source'))()
+local Window = OrionLib:MakeWindow({
+    Name = "J Hub",
+    HidePremium = false,
+    IntroText = "English or Spanish",
+    SaveConfig = true,
+    ConfigFolder = "J Hub"
+})
+
+OrionLib:MakeNotification({
+    Name = "English why?",
+    Content = "Whoever moves first is gay",
+    Image = "rbxassetid://4483345998",
+    Time = 30
+})
+
+-- Tabs
+
+local Tab1 = Window:MakeTab({
+    Name = "Main",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+local Tab1Section = Tab1:AddSection({
+    Name = "Main"
+})
+
+local Tab2 = Window:MakeTab({
+    Name = "Credits",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+local Tab2Section = Tab2:AddSection({
+    Name = "Made By John_paquito"
+})
+
+Tab2:AddSection({
+    Name = "Subscribe To John_paquito On Youtube"
+})
+
+-- Button --
+
+Tab1Section:AddButton({
+    Name = "Broken Script",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/H20CalibreYT/SystemBroken/main/script"))()
+    end    
+})
+
+Tab1Section:AddButton({
+    Name = "Fly",
+    Callback = function()
+        loadstring(game:HttpGet('https://pastebin.com/raw/YSL3xKYU'))()
+    end    
+})
+
+-- Fixed Tab Reference for Hitbox Section
+Tab1:AddTextbox({
+    Name = "Edit Hitbox Size",
+    Default = "15", -- Default hitbox size
+    TextDisappear = true,
+    Callback = function(value)
+        local size = tonumber(value)
+        if size then
+            _G.HeadSize = size
+            OrionLib:MakeNotification({
+                Name = "Hitbox Size Changed",
+                Content = "Hitbox size set to " .. size,
+                Image = "rbxassetid://4483345998",
+                Time = 5
+            })
+        else
+            OrionLib:MakeNotification({
+                Name = "Error",
+                Content = "Please enter a valid number",
+                Image = "rbxassetid://4483345998",
+                Time = 5
+            })
+        end
+    end
+})
+
+-- Button to activate Hitbox feature (Completed Callback)
+Tab1Section:AddButton({
+    Name = "Activate Hitbox",
+    Callback = function()
+        _G.Disabled = true
+        OrionLib:MakeNotification({
+            Name = "Hitbox Activated",
+            Content = "Hitbox feature has been activated",
+            Image = "rbxassetid://4483345998",
+            Time = 5
+        })
+    end    
+})
+
+-- Infinite Jumps Toggle (Fixed Tab Reference and Code)
+Tab1Section:AddToggle({
+    Name = "Infinite Jumps",
+    Default = false,
+    Callback = function(state)
+        local InfiniteJumpEnabled = state
+        game:GetService("UserInputService").JumpRequest:Connect(function()
+            if InfiniteJumpEnabled then
+                game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass('Humanoid'):ChangeState("Jumping")
+            end
+        end)
+    end    
+})
+
+-- WalkSpeed Editor (Fixed Tab Reference)
+Tab1Section:AddTextbox({
+    Name = "Edit WalkSpeed",
+    Default = "16", -- Default Roblox walk speed
+    TextDisappear = true,
+    Callback = function(value)
+        local speed = tonumber(value)
+        if speed then
+            local player = game.Players.LocalPlayer
+            if player and player.Character and player.Character:FindFirstChild("Humanoid") then
+                player.Character.Humanoid.WalkSpeed = speed
+                OrionLib:MakeNotification({
+                    Name = "Speed Changed",
+                    Content = "WalkSpeed set to " .. speed,
+                    Image = "rbxassetid://4483345998",
+                    Time = 5
+                })
+            end
+        else
+            OrionLib:MakeNotification({
+                Name = "Error",
+                Content = "Please enter a valid number",
+                Image = "rbxassetid://4483345998",
+                Time = 5
+            })
+        end
+    end
+})
+
+-- Other Buttons
+
+Tab1Section:AddButton({
+    Name = "Infinite Yield",
+    Callback = function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+    end    
+})
+
+Tab1Section:AddButton({
+    Name = "Click to Tp",
+    Callback = function()
+        local mouse = game.Players.LocalPlayer:GetMouse()
+        local tool = Instance.new("Tool")
+        tool.RequiresHandle = false
+        tool.Name = "A.K.A TOOL"
+        tool.Activated:Connect(function()
+            local pos = mouse.Hit + Vector3.new(0, 2.5, 0)
+            pos = CFrame.new(pos.X, pos.Y, pos.Z)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = pos
+        end)
+        tool.Parent = game.Players.LocalPlayer.Backpack
+    end    
+})
