@@ -1,65 +1,136 @@
-local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Orion/main/source'))()
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/ionlyusegithubformcmods/1-Line-Scripts/main/Mobile%20Friendly%20Orion')))()
 local Window = OrionLib:MakeWindow({
-    Name = "J Hub",
+    Name = "Petlog script",
     HidePremium = false,
     IntroText = "English or Spanish",
     SaveConfig = true,
-    ConfigFolder = "J Hub"
+    ConfigFolder = "Petlog script"
 })
 
 OrionLib:MakeNotification({
-    Name = "English why?",
-    Content = "Whoever moves first is gay",
+    Name = "Athan punch johnny sins",
+    Content = "To meet Baltamod in to moon",
     Image = "rbxassetid://4483345998",
     Time = 30
 })
 
--- Tabs
-
-local Tab1 = Window:MakeTab({
-    Name = "Main",
+local Tab = Window:MakeTab({
+    Name = "Games & credit",
     Icon = "rbxassetid://4483345998",
     PremiumOnly = false
 })
 
-local Tab1Section = Tab1:AddSection({
-    Name = "Main"
+local Section = Tab:AddSection({
+    Name = "100% Working in Unnamed shooter"
+})
+
+Tab:AddSection({
+    Name = "100% Working in Trench War"
+})
+
+Tab:AddSection({
+    Name = "100% Working in No scope"
+})
+
+Tab:AddSection({
+    Name = "100% Working in [FPS]Gun Grounds FFA"
+})
+
+Tab:AddSection({
+    Name = "100% Working in Trench combat"
+})
+
+Tab:AddSection({
+    Name = "And almost Working in all games"
+})
+
+Tab:AddSection({
+    Name = "Petlog A.K.A PEREZ+ATHAN=PETLOG"
+})
+
+Tab:AddSection({
+    Name = "Credits to loading script owner:D"
+})
+
+Tab:AddSection({
+    Name = "Credits to Key system script owner:D"
+})
+
+Tab:AddSection({
+    Name = "Script made by John_paquito"
+})
+
+Tab:AddSection({
+    Name = "A.K.A Red_chickennugget"
+})
+
+Tab:AddSection({
+    Name = "I'm Grade 7 in kasarinlan HS"
 })
 
 local Tab2 = Window:MakeTab({
-    Name = "Credits",
+    Name = "player",
     Icon = "rbxassetid://4483345998",
     PremiumOnly = false
 })
 
-local Tab2Section = Tab2:AddSection({
-    Name = "Made By John_paquito"
+local Section2 = Tab2:AddSection({
+    Name = "Athan + Perez = Petlog"
 })
 
-Tab2:AddSection({
-    Name = "Subscribe To John_paquito On Youtube"
-})
-
--- Button --
-
-Tab1Section:AddButton({
-    Name = "Broken Script",
+-- Button to change WalkSpeed
+Tab2:AddButton({
+    Name = "Button! Don't click this your WalkSpeed will change to 200",
     Callback = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/H20CalibreYT/SystemBroken/main/script"))()
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 200
     end    
 })
 
-Tab1Section:AddButton({
-    Name = "Fly",
-    Callback = function()
-        loadstring(game:HttpGet('https://pastebin.com/raw/YSL3xKYU'))()
+-- WalkSpeed editor
+Tab2:AddTextbox({
+    Name = "Edit WalkSpeed",
+    Default = "16", -- Default Roblox WalkSpeed
+    TextDisappear = true,
+    Callback = function(value)
+        local speed = tonumber(value)
+        if speed then
+            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = speed
+            OrionLib:MakeNotification({
+                Name = "Speed Changed",
+                Content = "WalkSpeed set to " .. speed,
+                Image = "rbxassetid://4483345998",
+                Time = 5
+            })
+        else
+            OrionLib:MakeNotification({
+                Name = "Error",
+                Content = "Please enter a valid number",
+                Image = "rbxassetid://4483345998",
+                Time = 5
+            })
+        end
+    end
+})
+
+-- Infinite jump toggle
+local InfiniteJumpConnection
+Section2:AddToggle({
+    Name = "Infinite Jumps",
+    Default = false,
+    Callback = function(state)
+        if InfiniteJumpConnection then InfiniteJumpConnection:Disconnect() end
+        if state then
+            InfiniteJumpConnection = game:GetService("UserInputService").JumpRequest:Connect(function()
+                game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass('Humanoid'):ChangeState("Jumping")
+            end)
+        end
     end    
 })
 
--- Fixed Tab Reference for Hitbox Section
-Tab1:AddTextbox({
+-- Hitbox size editor
+Tab2:AddTextbox({
     Name = "Edit Hitbox Size",
-    Default = "15", -- Default hitbox size
+    Default = "2", -- Default hitbox size (consider a valid number)
     TextDisappear = true,
     Callback = function(value)
         local size = tonumber(value)
@@ -82,84 +153,178 @@ Tab1:AddTextbox({
     end
 })
 
--- Button to activate Hitbox feature (Completed Callback)
-Tab1Section:AddButton({
+-- Button to activate Hitbox feature
+local HitboxConnection
+Tab2:AddButton({
     Name = "Activate Hitbox",
     Callback = function()
+        if HitboxConnection then HitboxConnection:Disconnect() end
         _G.Disabled = true
-        OrionLib:MakeNotification({
-            Name = "Hitbox Activated",
-            Content = "Hitbox feature has been activated",
-            Image = "rbxassetid://4483345998",
-            Time = 5
-        })
-    end    
-})
 
--- Infinite Jumps Toggle (Fixed Tab Reference and Code)
-Tab1Section:AddToggle({
-    Name = "Infinite Jumps",
-    Default = false,
-    Callback = function(state)
-        local InfiniteJumpEnabled = state
-        game:GetService("UserInputService").JumpRequest:Connect(function()
-            if InfiniteJumpEnabled then
-                game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass('Humanoid'):ChangeState("Jumping")
+        HitboxConnection = game:GetService('RunService').RenderStepped:Connect(function()
+            if _G.Disabled then
+                for _, v in ipairs(game:GetService('Players'):GetPlayers()) do
+                    if v.Name ~= game.Players.LocalPlayer.Name then
+                        pcall(function()
+                            local humanoidRootPart = v.Character and v.Character:FindFirstChild("HumanoidRootPart")
+                            if humanoidRootPart then
+                                humanoidRootPart.Size = Vector3.new(_G.HeadSize, _G.HeadSize, _G.HeadSize)
+                                humanoidRootPart.Transparency = 0.6
+                                humanoidRootPart.BrickColor = BrickColor.new("Really black")
+                                humanoidRootPart.Material = Enum.Material.Neon
+                                humanoidRootPart.CanCollide = false
+                            end
+                        end)
+                    end
+                end
             end
         end)
-    end    
-})
-
--- WalkSpeed Editor (Fixed Tab Reference)
-Tab1Section:AddTextbox({
-    Name = "Edit WalkSpeed",
-    Default = "16", -- Default Roblox walk speed
-    TextDisappear = true,
-    Callback = function(value)
-        local speed = tonumber(value)
-        if speed then
-            local player = game.Players.LocalPlayer
-            if player and player.Character and player.Character:FindFirstChild("Humanoid") then
-                player.Character.Humanoid.WalkSpeed = speed
-                OrionLib:MakeNotification({
-                    Name = "Speed Changed",
-                    Content = "WalkSpeed set to " .. speed,
-                    Image = "rbxassetid://4483345998",
-                    Time = 5
-                })
-            end
-        else
-            OrionLib:MakeNotification({
-                Name = "Error",
-                Content = "Please enter a valid number",
-                Image = "rbxassetid://4483345998",
-                Time = 5
-            })
-        end
     end
 })
 
--- Other Buttons
-
-Tab1Section:AddButton({
-    Name = "Infinite Yield",
-    Callback = function()
-        loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
-    end    
+local Tab4 = Window:MakeTab({
+    Name = "Blox Fruit",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
 })
 
-Tab1Section:AddButton({
-    Name = "Click to Tp",
+local Tab4Section = Tab4:AddSection({
+    Name = "Blox Fruit Tools"
+})
+
+Tab4Section:AddButton({
+    Name = "Kitsune Tool",
     Callback = function()
         local mouse = game.Players.LocalPlayer:GetMouse()
         local tool = Instance.new("Tool")
         tool.RequiresHandle = false
-        tool.Name = "A.K.A TOOL"
+        tool.Name = "Kitsune Fruit"
         tool.Activated:Connect(function()
-            local pos = mouse.Hit + Vector3.new(0, 2.5, 0)
-            pos = CFrame.new(pos.X, pos.Y, pos.Z)
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = pos
+            local pos = mouse.Hit.p + Vector3.new(0, 2.5, 0)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(pos)
         end)
         tool.Parent = game.Players.LocalPlayer.Backpack
     end    
 })
+
+Tab4Section:AddButton({
+    Name = "Buddha",
+    Callback = function()
+        local mouse = game.Players.LocalPlayer:GetMouse()
+        local tool = Instance.new("Tool")
+        tool.RequiresHandle = false
+        tool.Name = "Buddha Fruit"
+        tool.Activated:Connect(function()
+            local pos = mouse.Hit.p + Vector3.new(0, 2.5, 0)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(pos)
+        end)
+        tool.Parent = game.Players.LocalPlayer.Backpack
+    end    
+})
+
+Tab4Section:AddButton({
+    Name = "Mammoth Tool",
+    Callback = function()
+        local mouse = game.Players.LocalPlayer:GetMouse()
+        local tool = Instance.new("Tool")
+        tool.RequiresHandle = false
+        tool.Name = "Mammoth Fruit"
+        tool.Activated:Connect(function()
+            local pos = mouse.Hit.p + Vector3.new(0, 2.5, 0)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(pos)
+        end)
+        tool.Parent = game.Players.LocalPlayer.Backpack
+    end    
+})
+
+Tab4Section:AddButton({
+    Name = "T rex Tool",
+    Callback = function()
+        local mouse = game.Players.LocalPlayer:GetMouse()
+        local tool = Instance.new("Tool")
+        tool.RequiresHandle = false
+        tool.Name = "T-Rex Fruit"
+        tool.Activated:Connect(function()
+            local pos = mouse.Hit.p + Vector3.new(0, 2.5, 0)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(pos)
+        end)
+        tool.Parent = game.Players.LocalPlayer.Backpack
+    end    
+})
+
+
+Tab4Section:AddButton({
+    Name = "Phoenix Tool",
+    Callback = function()
+        local mouse = game.Players.LocalPlayer:GetMouse()
+        local tool = Instance.new("Tool")
+        tool.RequiresHandle = false
+        tool.Name = "Phoenix Fruit"
+        tool.Activated:Connect(function()
+            local pos = mouse.Hit.p + Vector3.new(0, 2.5, 0)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(pos)
+        end)
+        tool.Parent = game.Players.LocalPlayer.Backpack
+    end    
+})
+
+Tab4Section:AddButton({
+    Name = "Leopard Tool",
+    Callback = function()
+        local mouse = game.Players.LocalPlayer:GetMouse()
+        local tool = Instance.new("Tool")
+        tool.RequiresHandle = false
+        tool.Name = "Leopard Fruit"
+        tool.Activated:Connect(function()
+            local pos = mouse.Hit.p + Vector3.new(0, 2.5, 0)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(pos)
+        end)
+        tool.Parent = game.Players.LocalPlayer.Backpack
+    end    
+})
+
+Tab4Section:AddButton({
+    Name = "Spirit Tool",
+    Callback = function()
+        local mouse = game.Players.LocalPlayer:GetMouse()
+        local tool = Instance.new("Tool")
+        tool.RequiresHandle = false
+        tool.Name = "Spirit Fruit"
+        tool.Activated:Connect(function()
+            local pos = mouse.Hit.p + Vector3.new(0, 2.5, 0)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(pos)
+        end)
+        tool.Parent = game.Players.LocalPlayer.Backpack
+    end    
+})
+
+Tab4Section:AddButton({
+    Name = "Control Tool",
+    Callback = function()
+        local mouse = game.Players.LocalPlayer:GetMouse()
+        local tool = Instance.new("Tool")
+        tool.RequiresHandle = false
+        tool.Name = "Control Fruit"
+        tool.Activated:Connect(function()
+            local pos = mouse.Hit.p + Vector3.new(0, 2.5, 0)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(pos)
+        end)
+        tool.Parent = game.Players.LocalPlayer.Backpack
+    end    
+})
+
+Tab4Section:AddButton({
+    Name = "Venom Tool",
+    Callback = function()
+        local mouse = game.Players.LocalPlayer:GetMouse()
+        local tool = Instance.new("Tool")
+        tool.RequiresHandle = false
+        tool.Name = "Venom Fruit"
+        tool.Activated:Connect(function()
+            local pos = mouse.Hit.p + Vector3.new(0, 2.5, 0)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(pos)
+        end)
+        tool.Parent = game.Players.LocalPlayer.Backpack
+    end    
+})
+
